@@ -24,13 +24,13 @@
                                 <th>No</th>
                                 <th>ID Transaksi</th>
                                 <th>ID Pinjaman</th>
-                                <th>Tanggal Transaksi</th>
                                 <th>Anggota</th>
-                                <th>Jenis</th>
+                                <th>Tanggal Transaksi</th>
                                 <th>Cicilan Ke</th>
-                                <th>Pokok</th>
-                                <th>Bunga</th>
-                                <th>Denda</th>
+                                <th>Pembayaran Pokok</th>
+                                <th>Pembayaran Bunga</th>
+                                <th>Pembayaran Denda</th>
+                                <th>Pembayaran Total</th>
                                 <th>Keterangan</th>
                                 <th>Petugas</th>
                                 <th><i class="bi bi-gear"></i></th>
@@ -43,12 +43,14 @@
                                     <td> {{ $data->id_transaksi_pinjaman }}</td>
                                     <td>{{ $data->pinjaman->id_pinjaman }}</td>
                                     <td>{{ $data->pinjaman->anggota->nama_lengkap ?? '-' }}</td>
-                                    <td>{{ $data->pinjaman->jenis_pinjaman ?? '-' }}</td>
                                     <td>{{ $data->tanggal_bayar }}</td>
                                     <td>{{ $data->cicilan_ke }}</td>
                                     <td>Rp {{ number_format($data->pembayaran_pokok, 0, ',', '.') }}</td>
-                                    <td>Rp {{ number_format($data->pembayaran_bunga, 0, ',', '.') }}</td>
+                                    <td>Rp {{ number_format($data->pembayaran_nisbah, 0, ',', '.') }}</td>
                                     <td>Rp {{ number_format($data->pembayaran_denda, 0, ',', '.') }}</td>
+                                    <td>Rp
+                                        {{ number_format($data->pembayaran_pokok + $data->pembayaran_nisbah + $data->pembayaran_denda, 0, ',', '.') }}
+                                    </td>
                                     <td>{{ $data->keterangan }}</td>
                                     <td>{{ $data->petugas->nama_lengkap ?? '-' }}</td>
                                     <td>

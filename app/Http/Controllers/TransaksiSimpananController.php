@@ -26,22 +26,23 @@ class TransaksiSimpananController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'simpanan_id' => 'required|exists:simpanans,id',
             'tanggal' => 'required|date',
             'jenis_transaksi' => 'required|in:setor,tarik',
             'jumlah' => 'required|numeric|min:1',
             'keterangan' => 'nullable|string',
-            'user_id' => 'required|exists:users,id',
         ]);
-            $simpanan = Simpanan::findOrFail($request->simpanan_id);
+
+        $validatedData['user_id'] = auth()->id();
+        $simpanan = Simpanan::findOrFail($request->simpanan_id);
 
 
         if ($request->jenis_transaksi === 'tarik' && $simpanan->total_saldo < $request->jumlah) {
             return redirect()->route('transaksi-simpanan.index')->with('error', 'Saldo Anda tidak cukup.');
         }
 
-        $transaksi = TransaksiSimpanan::create($request->all());
+        $transaksi = TransaksiSimpanan::create($validatedData);
         $transaksi->id_transaksi_simpanan = 'TRSI-' . str_pad($transaksi->id, 7, '0', STR_PAD_LEFT);
         $transaksi->save();
 
@@ -52,14 +53,44 @@ class TransaksiSimpananController extends Controller
         }
         $simpanan->save();
 
+        $id_simpanan = $simpanan->id_simpanan;
+        $id_simpanan = explode('-', $id_simpanan)[0];
+        $jenis_simpanan = $simpanan->jenis_simpanan;
+
+        if($id_simpanan == 'SIRAYA') {
+            $akun_debit_1 = '210.01 - Simpanan Hari Raya';
+        } else if($id_simpanan == 'SISUQUR') {
+            $akun_debit_1 = '210.02 - Simpanan Qurban ';
+        } else if($id_simpanan == 'SIRELA') {
+            $akun_debit_1 = '210.03 - Simpanan Sukarela';
+        } else if($id_simpanan == 'SIMASJID') {
+            $akun_debit_1 = '210.04 - Simpanan Masjid';
+        } else if($id_simpanan == 'SIUMMA') {
+            $akun_debit_1 = '210.05 - Simpanan Lainnya';
+        } else if($id_simpanan == 'SISUKA') {
+            $akun_debit_1 = '210.06 - Simpanan Berjangka';
+        } else {
+            $akun_debit_1 = '210.00 - Simpanan Umum';
+        }
+
+        if($jenis_simpanan == 'Simpanan Wajib') {
+            $akun_debit_2 = '201.01 ';
+        } else if($jenis_simpanan == 'Simpanan Wajib') {
+            $akun_debit_2 = '201.02 ';
+        } else if($jenis_simpanan == 'Simpanan Sukarela') {
+            $akun_debit_2 = '201.03 ';
+        } else {
+            $akun_debit_2 = '201.00 ';
+        }
+
         if ($request->jenis_transaksi === 'setor') {
             JurnalKasMasuk::create([
                 'anggota_id' => $simpanan->anggota_id,
                 'tanggal' => $request->tanggal,
                 'no_bukti' => $transaksi->id_transaksi_simpanan,
-                'uraian' => 'Setor simpanan ' . ucfirst($simpanan->jenis_simpanan),
-                'akun_debit' => 'Kas',
-                'akun_kredit' => 'Simpanan ' . ucfirst($simpanan->jenis_simpanan),
+                'uraian' => 'Setor simpanan ',
+                'akun_debit' => '101-Kas',
+                'akun_kredit' => '' . $akun_debit_2 . ' ' . $akun_debit_1,
                 'nominal_debit' => $request->jumlah,
                 'nominal_kredit' => 0,
             ]);
@@ -68,9 +99,9 @@ class TransaksiSimpananController extends Controller
                 'anggota_id' => $simpanan->anggota_id,
                 'tanggal' => $request->tanggal,
                 'no_bukti' => $transaksi->id_transaksi_simpanan,
-                'uraian' => 'Penarikan simpanan ' . ucfirst($simpanan->jenis_simpanan),
-                'akun_debit' => 'Simpanan ' . ucfirst($simpanan->jenis_simpanan),
-                'akun_kredit' => 'Kas',
+                'uraian' => 'Penarikan simpanan ',
+                'akun_debit' => '' . $akun_debit_2 . ' ' . $akun_debit_1,
+                'akun_kredit' => '101-Kas',
                 'nominal_debit' => 0,
                 'nominal_kredit' => $request->jumlah,
             ]);
@@ -143,6 +174,36 @@ class TransaksiSimpananController extends Controller
             }
             $simpananBaru->save();
 
+            $id_simpanan = $simpananBaru->id_simpanan;
+            $id_simpanan = explode('-', $id_simpanan)[0];
+            $jenis_simpanan = $simpananBaru->jenis_simpanan;
+
+            if($id_simpanan == 'SIRAYA') {
+                $akun_debit_1 = '210.01 - Simpanan Hari Raya';
+            } else if($id_simpanan == 'SISUQUR') {
+                $akun_debit_1 = '210.02 - Simpanan Qurban ';
+            } else if($id_simpanan == 'SIRELA') {
+                $akun_debit_1 = '210.03 - Simpanan Sukarela';
+            } else if($id_simpanan == 'SIMASJID') {
+                $akun_debit_1 = '210.04 - Simpanan Masjid';
+            } else if($id_simpanan == 'SIUMMA') {
+                $akun_debit_1 = '210.05 - Simpanan Lainnya';
+            } else if($id_simpanan == 'SISUKA') {
+                $akun_debit_1 = '210.06 - Simpanan Berjangka';
+            } else {
+                $akun_debit_1 = '210.00 - Simpanan Umum';
+            }
+
+            if($jenis_simpanan == 'Simpanan Wajib') {
+                $akun_debit_2 = '201.01 ';
+            } else if($jenis_simpanan == 'Simpanan Wajib') {
+                $akun_debit_2 = '201.02 ';
+            } else if($jenis_simpanan == 'Simpanan Sukarela') {
+                $akun_debit_2 = '201.03 ';
+            } else {
+                $akun_debit_2 = '201.00 ';
+            }
+
             // Hapus jurnal lama dulu
             JurnalKasMasuk::where('no_bukti', $transaksi->id_transaksi_simpanan)->delete();
             JurnalKasKeluar::where('no_bukti', $transaksi->id_transaksi_simpanan)->delete();
@@ -153,9 +214,9 @@ class TransaksiSimpananController extends Controller
                     'anggota_id' => $simpananBaru->anggota_id,
                     'tanggal' => $request->tanggal,
                     'no_bukti' => $transaksi->id_transaksi_simpanan,
-                    'uraian' => 'Perubahan setor simpanan ' . ucfirst($simpananBaru->jenis_simpanan),
-                    'akun_debit' => 'Kas',
-                    'akun_kredit' => 'Simpanan ' . ucfirst($simpananBaru->jenis_simpanan),
+                    'uraian' => 'Perubahan setor simpanan ',
+                    'akun_debit' => '101-Kas',
+                    'akun_kredit' => '' . $akun_debit_2 . ' ' . $akun_debit_1,
                     'nominal_debit' => $request->jumlah,
                     'nominal_kredit' => 0,
                 ]);
@@ -164,9 +225,9 @@ class TransaksiSimpananController extends Controller
                     'anggota_id' => $simpananBaru->anggota_id,
                     'tanggal' => $request->tanggal,
                     'no_bukti' => $transaksi->id_transaksi_simpanan,
-                    'uraian' => 'Perubahan tarik simpanan ' . ucfirst($simpananBaru->jenis_simpanan),
-                    'akun_debit' => 'Simpanan ' . ucfirst($simpananBaru->jenis_simpanan),
-                    'akun_kredit' => 'Kas',
+                    'uraian' => 'Perubahan tarik simpanan ',
+                    'akun_debit' => '' . $akun_debit_2 . ' ' . $akun_debit_1,
+                    'akun_kredit' => '101-Kas',
                     'nominal_debit' => 0,
                     'nominal_kredit' => $request->jumlah,
                 ]);

@@ -84,21 +84,6 @@
                         @enderror
                     </div>
 
-                    <div class="col-md-6">
-                        <label for="user_id" class="form-label">Petugas Input</label>
-                        <select name="user_id" id="user_id" class="form-select" required>
-                            <option value="">-- Pilih Petugas --</option>
-                            @foreach ($users as $user)
-                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                    {{ $user->nama_lengkap ?? $user->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('user_id')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
                     <div class="text-start">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                         <a href="{{ route('transaksi-simpanan.index') }}" class="btn btn-secondary">Batal</a>

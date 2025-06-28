@@ -65,6 +65,24 @@
             </a>
         </li>
 
+        <li class="nav-item my-3">
+            <b>Laporan Nisbah</b>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link @yield('laporan_nisbah_tahun')" href="{{ route('laporan.nisbah.tahunan') }}">
+                <i class="bi bi-calendar3"></i>
+                <span>Tahunan</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @yield('laporan_nisbah_bulan')" href="{{ route('laporan.nisbah.bulanan') }}">
+                <i class="bi bi-calendar2-month"></i>
+                <span>Bulanan</span>
+            </a>
+        </li>
+
+
         @if (auth()->user()->role == 'admin')
         @endif
 

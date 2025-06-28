@@ -29,7 +29,7 @@
         th,
         td {
             border: 1px solid #000;
-            padding: 4px;
+            padding: 10px;
             text-align: left;
         }
 
@@ -66,13 +66,9 @@
                 <tr>
                     <th>No</th>
                     <th>Tanggal</th>
-                    <th>No Bukti</th>
-                    <th>Anggota</th>
-                    <th>Uraian</th>
-                    <th>Akun Debit</th>
-                    <th>Akun Kredit</th>
-                    <th>Nominal Debit</th>
-                    <th>Nominal Kredit</th>
+                    <th>Keterangan</th>
+                    <th>Debit</th>
+                    <th>Kredit</th>
                 </tr>
             </thead>
             <tbody>
@@ -85,11 +81,7 @@
                     <tr>
                         <td>{{ $i + 1 }}</td>
                         <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                        <td>{{ $item->no_bukti }}</td>
-                        <td>{{ $item->anggota->nama_lengkap ?? '-' }}</td>
                         <td>{{ $item->uraian }}</td>
-                        <td>{{ $item->akun_debit }}</td>
-                        <td>{{ $item->akun_kredit }}</td>
                         <td>Rp {{ number_format($item->nominal_debit, 0, ',', '.') }}</td>
                         <td>Rp {{ number_format($item->nominal_kredit, 0, ',', '.') }}</td>
                     </tr>
@@ -100,7 +92,7 @@
                 @endforeach
 
                 <tr class="subtotal">
-                    <td colspan="7">Subtotal Bulan {{ $bulan }}</td>
+                    <td colspan="3">Subtotal Bulan {{ $bulan }}</td>
                     <td>Rp {{ number_format($subDebit, 0, ',', '.') }}</td>
                     <td>Rp {{ number_format($subKredit, 0, ',', '.') }}</td>
                 </tr>

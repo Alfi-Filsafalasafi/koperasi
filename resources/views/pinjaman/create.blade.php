@@ -62,6 +62,15 @@
                     </div>
 
                     <div class="col-md-6">
+                        <label for="tanggal_pinjaman" class="form-label">Tanggal Pinjaman</label>
+                        <input type="date" name="tanggal_pinjaman" class="form-control" id="tanggal_pinjaman"
+                            value="{{ old('tanggal_pinjaman', date('Y-m-d')) }}" required>
+                        @error('tanggal_pinjaman')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6">
                         <label for="jangka_waktu" class="form-label">Jangka Waktu</label>
 
                         <select name="jangka_waktu" id="jangka_waktu" class="form-select" required>
@@ -124,21 +133,10 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-
-
-                    <div class="col-md-6">
-                        <label for="tanggal_pinjaman" class="form-label">Tanggal Pinjaman</label>
-                        <input type="date" name="tanggal_pinjaman" class="form-control" id="tanggal_pinjaman"
-                            value="{{ old('tanggal_pinjaman') }}" required>
-                        @error('tanggal_pinjaman')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
                     <div class="col-md-6">
                         <label for="tanggal_jatuh_tempo" class="form-label">Tanggal Jatuh Tempo</label>
                         <input type="date" name="tanggal_jatuh_tempo" class="form-control" id="tanggal_jatuh_tempo"
-                            value="{{ old('tanggal_jatuh_tempo') }}" required>
+                            value="{{ old('tanggal_jatuh_tempo') }}" required readonly>
                         @error('tanggal_jatuh_tempo')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -154,59 +152,5 @@
     </div>
 @endsection
 @section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const bungaInput = document.getElementById('bunga');
-            const jumlahPinjamanInput = document.getElementById('jumlah_pinjaman');
-            const jangkaWaktuSelect = document.getElementById('jangka_waktu');
-            const angsuranPokokInput = document.getElementById('angsuran_pokok');
-            const nisbahInput = document.getElementById('nisbah');
-
-            // Set default bunga = 1.5%
-            bungaInput.value = 1.5;
-
-            function hitungAngsuranDanNisbah() {
-                const jumlah = parseFloat(jumlahPinjamanInput.value) || 0;
-                const waktu = parseInt(jangkaWaktuSelect.value) || 0;
-                const bunga = 1.5;
-
-                // Hitung angsuran pokok
-                if (jumlah > 0 && waktu > 0) {
-                    angsuranPokokInput.value = (jumlah / waktu).toFixed(2);
-                } else {
-                    angsuranPokokInput.value = '';
-                }
-
-                // Hitung nisbah: bunga * jumlah pinjaman per bulan
-                nisbahInput.value = ((jumlah * bunga) / 100).toFixed(2);
-            }
-
-            jumlahPinjamanInput.addEventListener('input', hitungAngsuranDanNisbah);
-            jangkaWaktuSelect.addEventListener('change', hitungAngsuranDanNisbah);
-
-            const totalPinjamanInput = document.getElementById('total_pinjaman');
-
-            function hitungAngsuranDanNisbah() {
-                const jumlah = parseFloat(jumlahPinjamanInput.value) || 0;
-                const waktu = parseInt(jangkaWaktuSelect.value) || 0;
-                const bunga = 1.5;
-
-                // Hitung angsuran pokok
-                if (jumlah > 0 && waktu > 0) {
-                    angsuranPokokInput.value = (jumlah / waktu).toFixed(2);
-                } else {
-                    angsuranPokokInput.value = '';
-                }
-
-                // Hitung nisbah (per bulan)
-                const nisbah = (jumlah * bunga) / 100;
-                nisbahInput.value = nisbah.toFixed(2);
-
-                // Hitung total pinjaman
-                const totalPinjaman = jumlah + (nisbah * waktu);
-                totalPinjamanInput.value = totalPinjaman.toFixed(2);
-            }
-        });
-    </script>
-
+    @include('pinjaman._form_script')
 @endsection

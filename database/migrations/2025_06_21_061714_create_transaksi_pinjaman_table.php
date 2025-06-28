@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('pinjaman_id')->constrained('pinjamans')->onDelete('cascade');
             $table->date('tanggal_bayar');
             $table->decimal('pembayaran_pokok', 15, 2);
-            $table->decimal('pembayaran_bunga', 15, 2);
+            $table->decimal('pembayaran_nisbah', 15, 2);
             $table->decimal('pembayaran_denda', 15, 2);
             $table->integer('cicilan_ke');
             $table->text('keterangan')->nullable();

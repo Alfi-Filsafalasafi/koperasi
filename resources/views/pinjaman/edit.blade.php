@@ -2,14 +2,13 @@
 @section('title', 'Pinjaman')
 @section('subtitle', 'Edit')
 
-@section('pinjaman', '') {{-- Sesuaikan jika perlu --}}
+@section('pinjaman', '')
 @section('content')
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Edit Pinjaman</h5>
 
-                {{-- Alert Error Validation --}}
                 @if ($errors->any())
                     <div class="alert alert-danger alert-dismissible fade show">
                         <strong>Periksa kembali!</strong> Terdapat kesalahan pada form yang Anda isi:
@@ -47,17 +46,38 @@
                         <label for="jenis_pinjaman" class="form-label">Jenis Pinjaman</label>
                         <select name="jenis_pinjaman" id="jenis_pinjaman" class="form-select" required>
                             <option value="">-- Pilih --</option>
-                            <option value="Pinjaman Modal Usaha"
-                                {{ old('jenis_pinjaman', $pinjaman->jenis_pinjaman) == 'Pinjaman Modal Usaha' ? 'selected' : '' }}>
-                                Pinjaman Modal Usaha</option>
-                            <option value="Pinjaman Pembiayaan Multi Guna"
-                                {{ old('jenis_pinjaman', $pinjaman->jenis_pinjaman) == 'Pinjaman Pembiayaan Multi Guna' ? 'selected' : '' }}>
-                                Pinjaman Pembiayaan Multi Guna</option>
-                            <option value="Pinjaman Pembiayaan Umroh"
-                                {{ old('jenis_pinjaman', $pinjaman->jenis_pinjaman) == 'Pinjaman Pembiayaan Umroh' ? 'selected' : '' }}>
-                                Pinjaman Pembiayaan Umroh</option>
+                            @foreach (['Pinjaman Modal Usaha', 'Pinjaman Pembiayaan Multi Guna', 'Pinjaman Pembiayaan Umroh'] as $jenis)
+                                <option value="{{ $jenis }}"
+                                    {{ old('jenis_pinjaman', $pinjaman->jenis_pinjaman) == $jenis ? 'selected' : '' }}>
+                                    {{ $jenis }}</option>
+                            @endforeach
                         </select>
                         @error('jenis_pinjaman')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="tanggal_pinjaman" class="form-label">Tanggal Pinjaman</label>
+                        <input type="date" name="tanggal_pinjaman" class="form-control" id="tanggal_pinjaman"
+                            value="{{ old('tanggal_pinjaman', $pinjaman->tanggal_pinjaman) }}" required>
+                        @error('tanggal_pinjaman')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="jangka_waktu" class="form-label">Jangka Waktu</label>
+                        <select name="jangka_waktu" id="jangka_waktu" class="form-select" required>
+                            <option value="">-- Pilih Jangka Waktu --</option>
+                            @foreach ([12, 18, 24, 30, 36] as $bulan)
+                                <option value="{{ $bulan }}"
+                                    {{ old('jangka_waktu', $pinjaman->jangka_waktu) == $bulan ? 'selected' : '' }}>
+                                    {{ $bulan }} Bulan
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('jangka_waktu')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -73,9 +93,24 @@
 
                     <div class="col-md-6">
                         <label for="bunga" class="form-label">Bunga (%)</label>
-                        <input type="number" name="bunga" class="form-control" id="bunga"
-                            value="{{ old('bunga', $pinjaman->bunga) }}" step="0.01" required>
+                        <div class="input-group">
+                            <input type="number" name="bunga" class="form-control" id="bunga"
+                                value="{{ old('bunga', $pinjaman->bunga ?? 1.5) }}" step="0.01" required>
+                            <span class="input-group-text">/ bulan</span>
+                        </div>
                         @error('bunga')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="nisbah" class="form-label">Nisbah</label>
+                        <div class="input-group">
+                            <input type="number" name="nisbah" class="form-control" id="nisbah"
+                                value="{{ old('nisbah', $pinjaman->nisbah) }}" readonly>
+                            <div class="input-group-text">/ bulan</div>
+                        </div>
+                        @error('nisbah')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -90,19 +125,10 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="jangka_waktu" class="form-label">Jangka Waktu</label>
-                        <input type="text" name="jangka_waktu" class="form-control" id="jangka_waktu"
-                            value="{{ old('jangka_waktu', $pinjaman->jangka_waktu) }}" required>
-                        @error('jangka_waktu')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="col-md-6">
-                        <label for="tanggal_pinjaman" class="form-label">Tanggal Pinjaman</label>
-                        <input type="date" name="tanggal_pinjaman" class="form-control" id="tanggal_pinjaman"
-                            value="{{ old('tanggal_pinjaman', $pinjaman->tanggal_pinjaman) }}" required>
-                        @error('tanggal_pinjaman')
+                        <label for="total_pinjaman" class="form-label">Total Pinjaman</label>
+                        <input type="number" name="total_pinjaman" class="form-control" id="total_pinjaman"
+                            value="{{ old('total_pinjaman', $pinjaman->total_pinjaman) }}" readonly>
+                        @error('total_pinjaman')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -110,7 +136,7 @@
                     <div class="col-md-6">
                         <label for="tanggal_jatuh_tempo" class="form-label">Tanggal Jatuh Tempo</label>
                         <input type="date" name="tanggal_jatuh_tempo" class="form-control" id="tanggal_jatuh_tempo"
-                            value="{{ old('tanggal_jatuh_tempo', $pinjaman->tanggal_jatuh_tempo) }}" required>
+                            value="{{ old('tanggal_jatuh_tempo', $pinjaman->tanggal_jatuh_tempo) }}" readonly required>
                         @error('tanggal_jatuh_tempo')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -139,6 +165,7 @@
                         @enderror
                     </div>
 
+
                     <div class="text-start">
                         <button type="submit" class="btn btn-primary">Update</button>
                         <a href="{{ route('pinjaman.index') }}" class="btn btn-secondary">Batal</a>
@@ -147,4 +174,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    @include('pinjaman._form_script') {{-- Buatkan file JS terpisah jika perlu --}}
 @endsection

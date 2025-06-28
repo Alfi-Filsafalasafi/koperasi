@@ -35,9 +35,13 @@
                                     {{ old('pinjaman_id') == $pinjaman->id ? 'selected' : '' }}>
                                     {{ $pinjaman->anggota->nama_lengkap ?? '-' }} - {{ $pinjaman->jenis_pinjaman }} (Rp
                                     {{ number_format($pinjaman->sisa_pinjaman, 0, ',', '.') }})
+
                                 </option>
                             @endforeach
                         </select>
+                        <span id="sisa_pinjaman">Sisa Pinjaman = -</span> <br>
+                        <span id="angsuran_pokok">Angsuran Pokok = -</span> <br>
+                        <span id="nisbah">Nisbah = -</span>
                         @error('pinjaman_id')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -53,7 +57,7 @@
                         @enderror
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="pembayaran_pokok" class="form-label">Pembayaran Pokok</label>
                         <input type="number" name="pembayaran_pokok" class="form-control" id="pembayaran_pokok"
                             value="{{ old('pembayaran_pokok') }}" step="0.01" required>
@@ -62,16 +66,16 @@
                         @enderror
                     </div>
 
-                    <div class="col-md-4">
-                        <label for="pembayaran_bunga" class="form-label">Pembayaran Bunga</label>
-                        <input type="number" name="pembayaran_bunga" class="form-control" id="pembayaran_bunga"
-                            value="{{ old('pembayaran_bunga') }}" step="0.01" required>
-                        @error('pembayaran_bunga')
+                    <div class="col-md-6">
+                        <label for="pembayaran_nisbah" class="form-label">Pembayaran Nisbah</label>
+                        <input type="number" name="pembayaran_nisbah" class="form-control" id="pembayaran_nisbah"
+                            value="{{ old('pembayaran_nisbah') }}" step="0.01" required>
+                        @error('pembayaran_nisbah')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="pembayaran_denda" class="form-label">Pembayaran Denda</label>
                         <input type="number" name="pembayaran_denda" class="form-control" id="pembayaran_denda"
                             value="{{ old('pembayaran_denda') }}" step="0.01" required>
@@ -79,6 +83,15 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+                    <div class="col-md-6">
+                        <label for="total_pembayaran" class="form-label">Total Pembayaran</label>
+                        <input type="number" name="total_pembayaran" class="form-control" id="total_pembayaran"
+                            value="{{ old('total_pembayaran') }}" step="0.01" readonly>
+                        @error('total_pembayaran')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
 
                     <div class="col-md-3">
                         <label for="cicilan_ke" class="form-label">Cicilan Ke</label>
@@ -97,21 +110,6 @@
                         @enderror
                     </div>
 
-                    <div class="col-md-6">
-                        <label for="user_id" class="form-label">Petugas</label>
-                        <select name="user_id" id="user_id" class="form-select" required>
-                            <option value="">-- Pilih --</option>
-                            @foreach ($users as $user)
-                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                    {{ $user->nama_lengkap ?? $user->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('user_id')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
                     <div class="text-start">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                         <a href="{{ route('transaksi-pinjaman.index') }}" class="btn btn-secondary">Batal</a>
@@ -123,25 +121,5 @@
     </div>
 @endsection
 @section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const selectPinjaman = document.getElementById('pinjaman_id');
-            const inputCicilan = document.getElementById('cicilan_ke');
-
-            selectPinjaman.addEventListener('change', function() {
-                const pinjamanId = this.value;
-                if (!pinjamanId) return;
-
-                fetch(`/pinjaman/${pinjamanId}/cicilan-terakhir`)
-                    .then(response => response.json())
-                    .then(data => {
-                        inputCicilan.value = data.cicilan_ke;
-                    })
-                    .catch(error => {
-                        console.error('Gagal ambil cicilan:', error);
-                        inputCicilan.value = '';
-                    });
-            });
-        });
-    </script>
+    @include('transaksi_pinjaman._form_script')
 @endsection

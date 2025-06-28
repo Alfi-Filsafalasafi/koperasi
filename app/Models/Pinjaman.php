@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Pinjaman extends Model
 {
     protected $table = 'pinjamans';
-    protected $fillable = ['id_pinjaman', 'anggota_id', 'jumlah_pinjaman', 'bunga', 'jangka_waktu',
-                            'jenis_pinjaman','tanggal_pinjaman', 'tanggal_jatuh_tempo', 'angsuran_pokok', 'sisa_pinjaman', 'status'];
+    protected $fillable = ['id_pinjaman', 'anggota_id', 'jenis_pinjaman', 'tanggal_pinjaman', 'jangka_waktu',
+                            'jumlah_pinjaman', 'bunga', 'nisbah',  'angsuran_pokok', 'tanggal_jatuh_tempo',
+                            'sisa_pinjaman', 'total_pinjaman', 'status'];
 
     public function anggota()
     {

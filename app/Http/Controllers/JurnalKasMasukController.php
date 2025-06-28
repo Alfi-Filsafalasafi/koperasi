@@ -32,7 +32,6 @@ class JurnalKasMasukController extends Controller
 
         $datas = JurnalKasMasuk::with('anggota')
             ->whereYear('tanggal', $tahun)
-            ->latest()
             ->get()
             ->groupBy(function ($item) {
                 return \Carbon\Carbon::parse($item->tanggal)->translatedFormat('F');
@@ -41,7 +40,7 @@ class JurnalKasMasukController extends Controller
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('jurnal_kas_masuk.pdf', [
             'datas' => $datas,
             'tahun' => $tahun,
-        ])->setPaper('A4', 'landscape');
+        ])->setPaper('A4', 'potrait');
 
         return $pdf->download("jurnal_kas_masuk_{$tahun}.pdf");
     }

@@ -26,7 +26,7 @@
                     @csrf
 
                     <div class="col-md-6">
-                        <label for="id_simpanan" class="form-label">Jenis Simpanan</label>
+                        <label for="id_simpanan" class="form-label">Kategori Simpanan</label>
                         <select name="id_simpanan" id="id_simpanan" class="form-select" required>
                             <option value="">-- Pilih ID Simpanan --</option>
                             <option value="SIRAYA" {{ old('id_simpanan') == 'SIRAYA' ? 'selected' : '' }}>

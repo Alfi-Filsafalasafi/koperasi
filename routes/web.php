@@ -9,6 +9,7 @@ use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\TransaksiPinjamanController;
 use App\Http\Controllers\JurnalKasKeluarController;
 use App\Http\Controllers\JurnalKasMasukController;
+use App\Http\Controllers\LaporanNisbahController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -35,6 +36,10 @@ Route::middleware(['auth', 'pimpinan'])->group(function () {
     Route::get('jurnal-kas-keluar/cetak', [JurnalKasKeluarController::class, 'cetakPdf'])->name('jurnal-kas-keluar.cetak');
     Route::resource('jurnal-kas-masuk', JurnalKasMasukController::class)->only(['index']);
     Route::get('jurnal-kas-masuk/cetak', [JurnalKasMasukController::class, 'cetakPdf'])->name('jurnal-kas-masuk.cetak');
+    Route::get('/laporan/nisbah/tahun', [LaporanNisbahController::class, 'indexTahunan'])->name('laporan.nisbah.tahunan');
+    Route::get('/laporan/nisbah/pdf/tahun', [LaporanNisbahController::class, 'exportPdfTahunan'])->name('laporan.nisbah.tahunan.pdf');
+    Route::get('/laporan/nisbah/bulan', [LaporanNisbahController::class, 'indexBulanan'])->name('laporan.nisbah.bulanan');
+    Route::get('/laporan/nisbah/pdf/bulan', [LaporanNisbahController::class, 'exportPdfBulanan'])->name('laporan.nisbah.bulanan.pdf');
 });
 
 Route::middleware(['auth', 'pimpinan'])->group(function () {

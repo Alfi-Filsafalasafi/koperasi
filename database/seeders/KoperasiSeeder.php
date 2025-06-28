@@ -92,88 +92,88 @@ class KoperasiSeeder extends Seeder
         ]);
 
         // 💰 2. Simpanan
-        $simpanan = Simpanan::create([
-            'anggota_id' => $anggota->id,
-            'id_simpanan' => 'SIRAYA-0000001',
-            'jenis_simpanan' => 'Simpanan Wajib',
-            'saldo_awal' => 500000,
-            'total_saldo' => 500000,
-            'keterangan' => 'ini keterangan',
-        ]);
+        // $simpanan = Simpanan::create([
+        //     'anggota_id' => $anggota->id,
+        //     'id_simpanan' => 'SIRAYA-0000001',
+        //     'jenis_simpanan' => 'Simpanan Wajib',
+        //     'saldo_awal' => 500000,
+        //     'total_saldo' => 500000,
+        //     'keterangan' => 'ini keterangan',
+        // ]);
 
-        TransaksiSimpanan::create([
-            'id_transaksi_simpanan' => 'TRSI-0000001',
-            'simpanan_id' => $simpanan->id,
-            'tanggal' => now(),
-            'jenis_transaksi' => 'setor',
-            'jumlah' => 500000,
-            'keterangan' => 'Setoran awal wajib',
-            'user_id' => $kasir->id,
-        ]);
+        // TransaksiSimpanan::create([
+        //     'id_transaksi_simpanan' => 'TRSI-0000001',
+        //     'simpanan_id' => $simpanan->id,
+        //     'tanggal' => now(),
+        //     'jenis_transaksi' => 'setor',
+        //     'jumlah' => 500000,
+        //     'keterangan' => 'Setoran awal wajib',
+        //     'user_id' => $kasir->id,
+        // ]);
 
-        // 💳 3. Pinjaman
-        $pinjaman = Pinjaman::create([
-            'id_pinjaman' => 'PIMUSA-0000001',
-            'anggota_id' => $anggota->id,
-            'jumlah_pinjaman' => 3000000,
-            'bunga' => 5,
-            'jangka_waktu' => '6 bulan',
-            'tanggal_pinjaman' => now()->subMonths(3),
-            'tanggal_jatuh_tempo' => now()->subMonths(3),
-            'angsuran_pokok' => 500000,
-            'sisa_pinjaman' => 3000000,
-            'jenis_pinjaman' => 'Pinjaman Modal Usaha',
-            'status' => 'belum lunas',
-        ]);
+        // // 💳 3. Pinjaman
+        // $pinjaman = Pinjaman::create([
+        //     'id_pinjaman' => 'PIMUSA-0000001',
+        //     'anggota_id' => $anggota->id,
+        //     'jumlah_pinjaman' => 3000000,
+        //     'bunga' => 5,
+        //     'jangka_waktu' => '6 bulan',
+        //     'tanggal_pinjaman' => now()->subMonths(3),
+        //     'tanggal_jatuh_tempo' => now()->subMonths(3),
+        //     'angsuran_pokok' => 500000,
+        //     'sisa_pinjaman' => 3000000,
+        //     'jenis_pinjaman' => 'Pinjaman Modal Usaha',
+        //     'status' => 'belum lunas',
+        // ]);
 
-        TransaksiPinjaman::create([
-            'pinjaman_id' => $pinjaman->id,
-            'id_transaksi_pinjaman' => 'TRPI-0000001',
-            'tanggal_bayar' => now()->subMonths(2),
-            'pembayaran_pokok' => 600000,
-            'pembayaran_bunga' => 600000,
-            'pembayaran_denda' => 600000,
-            'cicilan_ke' => 1,
-            'keterangan' => 'Cicilan pertama',
-            'user_id' => $kasir->id,
-        ]);
+        // TransaksiPinjaman::create([
+        //     'pinjaman_id' => $pinjaman->id,
+        //     'id_transaksi_pinjaman' => 'TRPI-0000001',
+        //     'tanggal_bayar' => now()->subMonths(2),
+        //     'pembayaran_pokok' => 600000,
+        //     'pembayaran_nisbah' => 600000,
+        //     'pembayaran_denda' => 600000,
+        //     'cicilan_ke' => 1,
+        //     'keterangan' => 'Cicilan pertama',
+        //     'user_id' => $kasir->id,
+        // ]);
 
         // 🧾 4. Jurnal Kas Masuk & Keluar
-        JurnalKasMasuk::create([
-            'anggota_id' => $anggota->id,
-            'tanggal' => now(),
-            'no_bukti' => 'KM001',
-            'uraian' => 'Setoran simpanan wajib',
-            'akun_debit' => 'Kas',
-            'akun_kredit' => 'Simpanan Wajib',
-            'nominal_debit' => 500000,
-            'nominal_kredit' => 500000,
-        ]);
+        // JurnalKasMasuk::create([
+        //     'anggota_id' => $anggota->id,
+        //     'tanggal' => now(),
+        //     'no_bukti' => 'KM001',
+        //     'uraian' => 'Setoran simpanan wajib',
+        //     'akun_debit' => 'Kas',
+        //     'akun_kredit' => 'Simpanan Wajib',
+        //     'nominal_debit' => 500000,
+        //     'nominal_kredit' => 500000,
+        // ]);
 
-        JurnalKasKeluar::create([
-            'anggota_id' => $anggota->id,
-            'tanggal' => now(),
-            'no_bukti' => 'KK001',
-            'uraian' => 'Pemberian pinjaman',
-            'akun_debit' => 'Piutang Pinjaman',
-            'akun_kredit' => 'Kas',
-            'nominal_debit' => 3000000,
-            'nominal_kredit' => 3000000,
-        ]);
+        // JurnalKasKeluar::create([
+        //     'anggota_id' => $anggota->id,
+        //     'tanggal' => now(),
+        //     'no_bukti' => 'KK001',
+        //     'uraian' => 'Pemberian pinjaman',
+        //     'akun_debit' => 'Piutang Pinjaman',
+        //     'akun_kredit' => 'Kas',
+        //     'nominal_debit' => 3000000,
+        //     'nominal_kredit' => 3000000,
+        // ]);
 
         // 📊 5. Laporan Bagi Hasil
-        LaporanBagiHasil::create([
-            'kode' => 'BGH-' . date('Ymd-His'),
-            'nisbah' => 60.00,
-            'tahun_awal' => 2024,
-            'tahun_akhir' => 2024,
-            'periode' => 'Januari - Maret 2024',
-            'besaran_nisbah' => 12000000,
-            'total_pendapatan' => 20000000,
-            'pendapatan_dibagi' => 12000000,
-            'pendapatan_ditahan' => 8000000,
-            'jumlah_hari' => 90,
-            'is_cetak' => false,
-        ]);
+        // LaporanBagiHasil::create([
+        //     'kode' => 'BGH-' . date('Ymd-His'),
+        //     'nisbah' => 60.00,
+        //     'tahun_awal' => 2024,
+        //     'tahun_akhir' => 2024,
+        //     'periode' => 'Januari - Maret 2024',
+        //     'besaran_nisbah' => 12000000,
+        //     'total_pendapatan' => 20000000,
+        //     'pendapatan_dibagi' => 12000000,
+        //     'pendapatan_ditahan' => 8000000,
+        //     'jumlah_hari' => 90,
+        //     'is_cetak' => false,
+        // ]);
     }
 }

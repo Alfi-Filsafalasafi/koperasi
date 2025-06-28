@@ -26,9 +26,11 @@
                                 <th>Jenis</th>
                                 <th>Jumlah</th>
                                 <th>Bunga</th>
+                                <th>Nisbah</th>
                                 <th>Waktu</th>
                                 <th>Tgl Pinjam</th>
                                 <th>Jatuh Tempo</th>
+                                <th>Total</th>
                                 <th>Sisa</th>
                                 <th>Status</th>
                                 <th><i class="bi bi-gear"></i></th>
@@ -42,9 +44,11 @@
                                     <td>{{ ucfirst($data->jenis_pinjaman) }}</td>
                                     <td>Rp {{ number_format($data->jumlah_pinjaman, 2, ',', '.') }}</td>
                                     <td>{{ $data->bunga }}%</td>
+                                    <td>Rp {{ number_format($data->nisbah, 2, ',', '.') }}</td>
                                     <td>{{ $data->jangka_waktu }}</td>
                                     <td>{{ $data->tanggal_pinjaman }}</td>
                                     <td>{{ $data->tanggal_jatuh_tempo }}</td>
+                                    <td>Rp {{ number_format($data->total_pinjaman, 2, ',', '.') }}</td>
                                     <td>Rp {{ number_format($data->sisa_pinjaman, 2, ',', '.') }}</td>
                                     <td>
                                         <span class="badge bg-{{ $data->status == 'lunas' ? 'success' : 'warning' }}">
