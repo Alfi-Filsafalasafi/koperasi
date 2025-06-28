@@ -2,7 +2,17 @@
 @section('title', 'Transaksi Pinjaman')
 @section('subtitle', 'Tambah')
 
+@section('dashboard', 'collapsed')
+@section('anggota', 'collapsed')
+@section('simpanan', 'collapsed')
+@section('transaksi_simpanan', 'collapsed')
+@section('pinjaman', 'collapsed')
 @section('transaksi_pinjaman', '')
+@section('jurnal_kas_masuk', 'collapsed')
+@section('jurnal_kas_keluar', 'collapsed')
+@section('laporan_nisbah_tahun', 'collapsed')
+@section('laporan_nisbah_bulan', 'collapsed')
+
 @section('content')
     <div class="col-lg-12">
         <div class="card">

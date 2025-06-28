@@ -2,7 +2,17 @@
 @section('title', 'Laporan Nisbah')
 @section('subtitle', 'Tahunan')
 
-@section('transaksi_pinjaman', '') {{-- Sesuaikan dengan menu aktif --}}
+@section('dashboard', 'collapsed')
+@section('anggota', 'collapsed')
+@section('simpanan', 'collapsed')
+@section('transaksi_simpanan', 'collapsed')
+@section('pinjaman', 'collapsed')
+@section('transaksi_pinjaman', 'collapsed')
+@section('jurnal_kas_masuk', 'collapsed')
+@section('jurnal_kas_keluar', 'collapsed')
+@section('laporan_nisbah_tahun', '')
+@section('laporan_nisbah_bulan', 'collapsed')
+
 @section('content')
     <div class="col-lg-12">
         @if (session('success'))
@@ -30,7 +40,7 @@
                         </select>
                     </div>
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-primary"><i class="bi bi-filter"></i> Filter</button>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-filter"></i> Tampilkan</button>
                         <a href="{{ route('laporan.nisbah.tahunan.pdf', ['tahun' => $tahun]) }}" target="_blank"
                             class="btn btn-danger">
                             <i class="bi bi-file-earmark-pdf"></i> Export PDF

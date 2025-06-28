@@ -2,7 +2,17 @@
 @section('title', 'Jurnal Kas Masuk')
 @section('subtitle', 'Daftar')
 
-@section('jurnal kas masuk', '') {{-- Sesuaikan jika ada highlight sidebar --}}
+@section('dashboard', 'collapsed')
+@section('anggota', 'collapsed')
+@section('simpanan', 'collapsed')
+@section('transaksi_simpanan', 'collapsed')
+@section('pinjaman', 'collapsed')
+@section('transaksi_pinjaman', 'collapsed')
+@section('jurnal_kas_masuk', '')
+@section('jurnal_kas_keluar', 'collapsed')
+@section('laporan_nisbah_tahun', 'collapsed')
+@section('laporan_nisbah_bulan', 'collapsed')
+
 @section('content')
     <div class="col-lg-12">
         @if (session('success'))

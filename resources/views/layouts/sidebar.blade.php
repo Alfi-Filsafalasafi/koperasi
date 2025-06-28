@@ -43,7 +43,7 @@
 
         <!-- Transaksi Pinjaman -->
         <li class="nav-item">
-            <a class="nav-link @yield('transaksi')" href="{{ route('transaksi-pinjaman.index') }}">
+            <a class="nav-link @yield('transaksi_pinjaman')" href="{{ route('transaksi-pinjaman.index') }}">
                 <i class="bi bi-arrow-left-right"></i>
                 <span>Transaksi Pinjaman</span>
             </a>

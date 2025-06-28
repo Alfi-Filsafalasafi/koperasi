@@ -30,7 +30,7 @@
             <h1>@yield('title')</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">@yield('title')</a></li>
+                    <li class="breadcrumb-item"><a href="#">@yield('title')</a></li>
                     <li class="breadcrumb-item active">@yield('subtitle')</li>
                 </ol>
             </nav>

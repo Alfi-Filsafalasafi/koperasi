@@ -1,7 +1,17 @@
 @extends('layouts.master')
 @section('title', 'Laporan Nisbah')
 @section('subtitle', 'Bulanan')
-@section('transaksi_pinjaman', '')
+
+@section('dashboard', 'collapsed')
+@section('anggota', 'collapsed')
+@section('simpanan', 'collapsed')
+@section('transaksi_simpanan', 'collapsed')
+@section('pinjaman', 'collapsed')
+@section('transaksi_pinjaman', 'collapsed')
+@section('jurnal_kas_masuk', 'collapsed')
+@section('jurnal_kas_keluar', 'collapsed')
+@section('laporan_nisbah_tahun', 'collapsed')
+@section('laporan_nisbah_bulan', '')
 
 @section('content')
     <div class="col-lg-12">
@@ -26,7 +36,7 @@
                         </select>
                     </div>
                     <div class="col-md-6 text-end">
-                        <button class="btn btn-primary">Tampilkan</button>
+                        <button class="btn btn-primary"> <i class="bi bi-filter"></i> Tampilkan</button>
                         <a href="{{ route('laporan.nisbah.bulanan.pdf', ['tahun' => $tahun, 'bulan' => $bulan]) }}"
                             class="btn btn-danger" target="_blank"><i class="bi bi-file-earmark-pdf"></i> Export PDF</a>
                     </div>
