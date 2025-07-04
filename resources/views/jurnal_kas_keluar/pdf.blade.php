@@ -66,7 +66,7 @@
                 <tr>
                     <th>No</th>
                     <th>Tanggal</th>
-                    <th>Keterangan</th>
+                    <th colspan="2">Keterangan</th>
                     <th>Debit</th>
                     <th>Kredit</th>
                 </tr>
@@ -81,10 +81,23 @@
                     <tr>
                         <td>{{ $i + 1 }}</td>
                         <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                        <td>{{ $item->uraian }}</td>
+                        <td colspan="2">{{ explode('-', $item->akun_debit)[1] }}</td>
                         <td>Rp {{ number_format($item->nominal_debit, 0, ',', '.') }}</td>
-                        <td>Rp {{ number_format($item->nominal_kredit, 0, ',', '.') }}</td>
+                        <td></td>
                     </tr>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{ $item->akun_kredit }}</td>
+                        <td></td>
+                        <td>
+                            Rp {{ number_format($item->nominal_kredit, 0, ',', '.') }}
+                        </td>
+
+                    </tr>
+
                     @php
                         $subDebit += $item->nominal_debit;
                         $subKredit += $item->nominal_kredit;
@@ -92,7 +105,7 @@
                 @endforeach
 
                 <tr class="subtotal">
-                    <td colspan="3">Subtotal Bulan {{ $bulan }}</td>
+                    <td colspan="4">Subtotal Bulan {{ $bulan }}</td>
                     <td>Rp {{ number_format($subDebit, 0, ',', '.') }}</td>
                     <td>Rp {{ number_format($subKredit, 0, ',', '.') }}</td>
                 </tr>

@@ -92,7 +92,7 @@ class TransaksiSimpananController extends Controller
                 'akun_debit' => '101-Kas',
                 'akun_kredit' => '' . $akun_debit_2 . ' ' . $akun_debit_1,
                 'nominal_debit' => $request->jumlah,
-                'nominal_kredit' => 0,
+                'nominal_kredit'  => $request->jumlah,
             ]);
         } else {
             JurnalKasKeluar::create([
@@ -102,7 +102,7 @@ class TransaksiSimpananController extends Controller
                 'uraian' => 'Penarikan simpanan ',
                 'akun_debit' => '' . $akun_debit_2 . ' ' . $akun_debit_1,
                 'akun_kredit' => '101-Kas',
-                'nominal_debit' => 0,
+                'nominal_debit'  => $request->jumlah,
                 'nominal_kredit' => $request->jumlah,
             ]);
         }
@@ -218,7 +218,7 @@ class TransaksiSimpananController extends Controller
                     'akun_debit' => '101-Kas',
                     'akun_kredit' => '' . $akun_debit_2 . ' ' . $akun_debit_1,
                     'nominal_debit' => $request->jumlah,
-                    'nominal_kredit' => 0,
+                    'nominal_kredit'  => $request->jumlah,
                 ]);
             } else {
                 JurnalKasKeluar::create([
@@ -228,7 +228,7 @@ class TransaksiSimpananController extends Controller
                     'uraian' => 'Perubahan tarik simpanan ',
                     'akun_debit' => '' . $akun_debit_2 . ' ' . $akun_debit_1,
                     'akun_kredit' => '101-Kas',
-                    'nominal_debit' => 0,
+                    'nominal_debit'  => $request->jumlah,
                     'nominal_kredit' => $request->jumlah,
                 ]);
             }

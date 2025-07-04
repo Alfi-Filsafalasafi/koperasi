@@ -61,7 +61,7 @@ class PinjamanController extends Controller
             'uraian' => 'Pencairan pinjaman ',
             'akun_debit' => $akun_debit,
             'akun_kredit' => '101-Kas',
-            'nominal_debit' => 0,
+            'nominal_debit' =>  $request->total_pinjaman,
             'nominal_kredit' => $request->total_pinjaman,
         ]);
 
@@ -123,7 +123,7 @@ class PinjamanController extends Controller
             'uraian' => 'Update pencairan pinjaman',
             'akun_debit' => $akun_debit,
             'akun_kredit' => '101-Kas',
-            'nominal_debit' => 0,
+            'nominal_debit' =>  $request->total_pinjaman,
             'nominal_kredit' => $request->total_pinjaman,
         ]);
 

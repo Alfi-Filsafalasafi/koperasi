@@ -13,7 +13,7 @@ use App\Http\Controllers\LaporanNisbahController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 
@@ -25,13 +25,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'pimpinan'])->group(function () {
+Route::middleware(['auth', 'kasir'])->group(function () {
     Route::resource('anggota', AnggotaController::class);
+});
+
+Route::middleware(['auth', 'bendahara'])->group(function () {
     Route::resource('simpanan', SimpananController::class);
     Route::resource('transaksi-simpanan', TransaksiSimpananController::class);
     Route::resource('pinjaman', PinjamanController::class);
     Route::resource('transaksi-pinjaman', TransaksiPinjamanController::class);
     Route::get('/pinjaman/{id}/cicilan-terakhir', [TransaksiPinjamanController::class, 'getCicilanTerakhir']);
+});
+
+Route::middleware(['auth', 'pimpinan'])->group(function () {
     Route::resource('jurnal-kas-keluar', JurnalKasKeluarController::class)->only(['index']);
     Route::get('jurnal-kas-keluar/cetak', [JurnalKasKeluarController::class, 'cetakPdf'])->name('jurnal-kas-keluar.cetak');
     Route::resource('jurnal-kas-masuk', JurnalKasMasukController::class)->only(['index']);

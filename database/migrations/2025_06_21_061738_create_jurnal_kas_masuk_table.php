@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('akun_kredit'); // Akun kredit
             $table->decimal('nominal_debit', 15, 2); // Nominal debit
             $table->decimal('nominal_kredit', 15, 2); // Nominal kredit
+            $table->decimal('pembayaran_pokok', 15, 2); // Nominal debit
+            $table->decimal('pembayaran_kredit', 15, 2); // Nominal kredit
+            $table->decimal('pembayaran_denda', 15, 2); // Nominal debit
             $table->timestamps();
         });
     }

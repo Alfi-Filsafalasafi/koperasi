@@ -97,7 +97,10 @@ class TransaksiPinjamanController extends Controller
                 'akun_debit' => '101-Kas',
                 'akun_kredit' => $akun_kredit,
                 'nominal_debit' => $request->pembayaran_pokok + $request->pembayaran_nisbah + $request->pembayaran_denda,
-                'nominal_kredit' => 0,
+                'nominal_kredit' => $request->pembayaran_pokok + $request->pembayaran_nisbah + $request->pembayaran_denda,
+                'pembayaran_pokok' => $request->pembayaran_pokok,
+                'pembayaran_bunga' => $request->pembayaran_nisbah,
+                'pembayaran_denda' => $request->pembayaran_denda,
             ]);
         });
 
@@ -164,7 +167,10 @@ class TransaksiPinjamanController extends Controller
                 'akun_debit' => '101-Kas',
                 'akun_kredit' => $akun_kredit,
                 'nominal_debit' => $request->pembayaran_pokok + $request->pembayaran_nisbah + $request->pembayaran_denda,
-                'nominal_kredit' => 0,
+                'nominal_kredit' => $request->pembayaran_pokok + $request->pembayaran_nisbah + $request->pembayaran_denda,
+                'pembayaran_pokok' => $request->pembayaran_pokok,
+                'pembayaran_bunga' => $request->pembayaran_nisbah,
+                'pembayaran_denda' => $request->pembayaran_denda,
             ]);
         });
 

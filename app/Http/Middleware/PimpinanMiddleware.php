@@ -11,7 +11,7 @@ class PimpinanMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role === 'pimpinan') {
+        if (Auth::check() && (Auth::user()->role === 'pimpinan' || Auth::user()->role === 'bendahara')) {
             return $next($request);
         }
 

@@ -67,7 +67,9 @@
                                     <td>{{ $data->akun_debit }}</td>
                                     <td>{{ $data->akun_kredit }}</td>
                                     <td>{{ $data->nominal_debit }}</td>
-                                    <td>{{ $data->nominal_kredit }}</td>
+                                    <td>
+                                            {{ $data->nominal_kredit }}
+                                    </td>
 
                                 </tr>
                             @endforeach

@@ -146,7 +146,7 @@ class SimpananController extends Controller
                     'akun_debit' => '101-Kas',
                     'akun_kredit' => '' . $akun_debit_2 . ' ' . $akun_debit_1,
                     'nominal_debit' => $request->saldo_awal,
-                    'nominal_kredit' => 0,
+                    'nominal_kredit' => $request->saldo_awal,
                 ]);
 
         return redirect()->route('simpanan.index')->with('success', 'Data simpanan berhasil diupdate.');
